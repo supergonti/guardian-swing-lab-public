@@ -3,7 +3,9 @@
 .env.*
 *.pem
 *.key
+*.secret
 *secret*
+*credentials*
 *token*
 *credential*
 data/private_vault/
