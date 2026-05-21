@@ -1,0 +1,66 @@
+name: Deploy Swing Lab public mobile page
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 17:00 UTC = 02:00 JST. Public-data update only.
+    - cron: "0 17 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build public Swing Lab page
+        run: |
+          mkdir -p _site reports/github_pages mock_mvp/reports
+          python -B tools/swing_lab_public/build_public_swing_lab.py \
+            --fetch-live \
+            --cards-json mock_mvp/reports/swing_lab_public_pages_cards.json \
+            --html _site/index.html \
+            --dated-html _site/guardian_swing_lab_mobile_public_20260521.html \
+            --summary reports/github_pages/public_update_summary.json \
+            --print-summary
+
+      - name: Scan public HTML
+        run: |
+          python -B tools/public_ui/scan_public_html.py _site/index.html
+
+      - name: Prepare Pages artifact
+        run: |
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

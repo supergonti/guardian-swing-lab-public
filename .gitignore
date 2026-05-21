@@ -1,0 +1,48 @@
+# Private and sensitive data
+.env
+.env.*
+*.pem
+*.key
+*secret*
+*token*
+*credential*
+data/private_vault/
+data/backups/
+
+# Manual broker/import data
+data/imports/rakuten_rss/*.csv
+!data/imports/rakuten_rss/*_sample.csv
+
+# Generated logs and reports
+reports/logs/
+reports/rakuten_import/*.json
+reports/github_pages/*.json
+mock_mvp/reports/swing_lab_public_pages_cards.json
+_site/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node dependencies and caches
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup

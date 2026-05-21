@@ -1,0 +1,7 @@
+as_of,ticker_or_code,currency,last_price,price_source,source_url,data_status,note
+2026-05-21T02:00:00+09:00,1308,JPY,1000.00,sample_manual_csv,https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf,sample_only,サンプル価格。実価格ではありません。
+2026-05-21T02:00:00+09:00,1655,JPY,1000.00,sample_manual_csv,https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf,sample_only,サンプル価格。実価格ではありません。
+2026-05-21T02:00:00+09:00,2559,JPY,1000.00,sample_manual_csv,https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf,sample_only,サンプル価格。実価格ではありません。
+2026-05-21T02:00:00+09:00,2631,JPY,1000.00,sample_manual_csv,https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf,sample_only,サンプル価格。実価格ではありません。
+2026-05-21T02:00:00+09:00,SPY,USD,100.00,sample_manual_csv,https://www.rakuten-sec.co.jp/web/market/search/us_search/quote.html?ric=SPY,sample_only,サンプル価格。取扱確認未完了のため提案対象外。
+2026-05-21T02:00:00+09:00,QQQ,USD,100.00,sample_manual_csv,https://www.rakuten-sec.co.jp/web/market/search/us_search/quote.html?ric=QQQ.O,sample_only,サンプル価格。取扱確認未完了のため提案対象外。

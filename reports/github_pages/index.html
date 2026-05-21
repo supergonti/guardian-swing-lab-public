@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Guardian Swing Lab スマホ確認版 - index.html</title>
+<style>
+:root {
+  --bg: #f3f5f4;
+  --panel: #ffffff;
+  --ink: #101417;
+  --muted: #637078;
+  --line: #d8e0df;
+  --green: #11724c;
+  --amber: #a76608;
+  --red: #b23535;
+  --blue: #276b8d;
+  --soft: #edf2f0;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", "Yu Gothic UI", Meiryo, sans-serif;
+  line-height: 1.65;
+  letter-spacing: 0;
+}
+a { color: #075db3; overflow-wrap: anywhere; }
+header {
+  padding: 18px 16px 14px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+}
+h1 { margin: 0; font-size: 22px; line-height: 1.25; }
+h2 { margin: 0; font-size: 20px; line-height: 1.32; }
+p { margin: 0; }
+.file-name {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  background: #fbfcfc;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+.meta {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.guardrails {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+.guardrails span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #f7faf9;
+  font-size: 13px;
+  font-weight: 800;
+}
+main { padding: 14px; max-width: 980px; margin: 0 auto; }
+.summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.metric {
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.metric span { display: block; color: var(--muted); font-size: 12px; }
+.metric b { display: block; margin-top: 3px; font-size: 24px; line-height: 1.2; }
+.notice {
+  padding: 13px;
+  margin-bottom: 12px;
+  border: 1px solid #d9c58d;
+  border-radius: 8px;
+  background: #fff8e6;
+  color: #563d05;
+  font-size: 13px;
+}
+.proposal-list { display: grid; gap: 14px; }
+.proposal-card {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.proposal-card.buy { border-top: 5px solid var(--green); }
+.proposal-card.sell, .proposal-card.reduce { border-top: 5px solid var(--amber); }
+.proposal-card.exit { border-top: 5px solid var(--red); }
+.proposal-card.skip { border-top: 5px solid var(--muted); }
+.card-topline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.idline { margin-top: 4px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.action-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+}
+.action-badge.buy { background: var(--green); }
+.action-badge.sell, .action-badge.reduce { background: var(--amber); }
+.action-badge.exit { background: var(--red); }
+.action-badge.skip { background: var(--muted); }
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 12px;
+  background: #fbfcfc;
+  border-bottom: 1px solid var(--line);
+}
+.quick-grid section {
+  min-height: 66px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #ffffff;
+}
+.quick-grid span, .statement span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.quick-grid b { font-size: 15px; overflow-wrap: anywhere; }
+.statement {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.statement:last-child { border-bottom: 0; }
+.statement p, .statement li { font-size: 15px; font-weight: 700; }
+.statement ul { margin: 0; padding-left: 20px; }
+.muted { color: var(--muted); font-weight: 500; }
+footer {
+  padding: 18px 14px 28px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+@media (min-width: 720px) {
+  header { padding: 22px 24px 16px; }
+  h1 { font-size: 28px; }
+  main { padding: 18px 22px; }
+  .guardrails { grid-template-columns: repeat(4, max-content); }
+  .summary { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card-topline { grid-template-columns: minmax(0, 1fr) max-content; align-items: start; }
+  .quick-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Guardian Swing Lab スマホ確認版</h1>
+  <div class="file-name">index.html</div>
+  <p class="meta">生成: 2026-05-21 10:13 / データ: 2026-05-21 / 入力: swing_lab_public_pages_daily</p>
+  <div class="guardrails" aria-label="安全条件">
+    <span>個人情報なし</span>
+    <span>保有情報なし</span>
+    <span>自動発注なし</span>
+    <span>公開確認用</span>
+  </div>
+</header>
+<main>
+  <section class="summary" aria-label="概要">
+    <div class="metric"><span>提案カード</span><b>4</b></div>
+    <div class="metric"><span>買い提案</span><b>0</b></div>
+    <div class="metric"><span>売り提案</span><b>4</b></div>
+    <div class="metric"><span>停止必須</span><b>0</b></div>
+  </section>
+  <section class="notice">
+    このページはスマホ確認用の静的HTMLです。公開情報ベースの提案カードだけを表示します。実行前には楽天証券画面とローカルGuardianで人間確認してください。
+  </section>
+  <section class="proposal-list" aria-label="提案カード">
+    
+<article class="proposal-card sell">
+  <div class="card-topline">
+    <div>
+      <h2>1308 / 上場TOPIX</h2>
+      <p class="idline">SWING_PUBLIC_1308_20260521</p>
+    </div>
+    <span class="action-badge sell">売り提案</span>
+  </div>
+
+  <div class="quick-grid">
+    <section><span>リスク</span><b>中リスク</b></section>
+    <section><span>商品</span><b>ETF</b></section>
+    <section><span>ゲート</span><b>2</b></section>
+    <section><span>参照価格</span><b>4,058.00 JPY</b></section>
+    <section><span>投入上限</span><b>28,406.00 JPY</b></section>
+    <section><span>最大許容損失</span><b>1,136.24 JPY</b></section>
+  </div>
+
+  <section class="statement">
+    <span>レジーム</span>
+    <p>高ボラ警戒 / 確信度 1.00</p>
+  </section>
+  <section class="statement">
+    <span>根拠シグナル</span>
+    <ul><li>リスク: profit_protection_or_overheat</li></ul>
+  </section>
+  <section class="statement">
+    <span>反証条件</span>
+    <p>終値が損切り目安を下回る、出来高を伴わない反転、またはレジームが高ボラ警戒へ移行した場合は提案を弱める。</p>
+  </section>
+  <section class="statement">
+    <span>損切り・撤退条件</span>
+    <p>参照価格4058.00に対し、週次終値が3895.68を下回る場合は撤退確認。</p>
+  </section>
+  <section class="statement">
+    <span>情報要約</span>
+    <p>1308 / 上場TOPIX。公開データソース 1308.T の直近終値は4058.00 JPY。楽天証券購入可能ユニバースで確認済み。</p>
+  </section>
+  <section class="statement">
+    <span>データ鮮度</span>
+    <p>live_public_web_yahoo: 2026-05-21 時点。生成日 2026-05-21。</p>
+  </section>
+  <section class="statement">
+    <span>バックテスト確認</span>
+    <ul><li>シグナル遅延: 1期</li><li>取引コスト: 含む</li><li>スリッページ: 含む</li><li>最大DD: -0.117</li><li>OOS: 確認済み</li><li>WF: 確認済み</li></ul>
+  </section>
+  <section class="statement">
+    <span>警告</span>
+    <ul><li>公開情報のみのため、実行条件は別途確認してください</li><li>売り側の実行前にローカルGuardianで保有確認が必要です</li><li>人間確認が未完了です</li></ul>
+  </section>
+  <section class="statement">
+    <span>公開Web参照元</span>
+    <ul><li><a href="https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf" rel="noopener noreferrer" target="_blank">楽天証券 取扱確認元</a></li><li><a href="https://query1.finance.yahoo.com/v8/finance/chart/1308.T?range=1y&amp;interval=1d" rel="noopener noreferrer" target="_blank">Yahoo Finance 1308.T 日次チャート</a></li></ul>
+  </section>
+</article>
+
+
+<article class="proposal-card sell">
+  <div class="card-topline">
+    <div>
+      <h2>1655 / iS S&amp;P500米国株</h2>
+      <p class="idline">SWING_PUBLIC_1655_20260521</p>
+    </div>
+    <span class="action-badge sell">売り提案</span>
+  </div>
+
+  <div class="quick-grid">
+    <section><span>リスク</span><b>中リスク</b></section>
+    <section><span>商品</span><b>ETF</b></section>
+    <section><span>ゲート</span><b>2</b></section>
+    <section><span>参照価格</span><b>848.40 JPY</b></section>
+    <section><span>投入上限</span><b>29,694.00 JPY</b></section>
+    <section><span>最大許容損失</span><b>1,187.76 JPY</b></section>
+  </div>
+
+  <section class="statement">
+    <span>レジーム</span>
+    <p>高ボラ警戒 / 確信度 0.91</p>
+  </section>
+  <section class="statement">
+    <span>根拠シグナル</span>
+    <ul><li>リスク: profit_protection_or_overheat</li></ul>
+  </section>
+  <section class="statement">
+    <span>反証条件</span>
+    <p>終値が損切り目安を下回る、出来高を伴わない反転、またはレジームが高ボラ警戒へ移行した場合は提案を弱める。</p>
+  </section>
+  <section class="statement">
+    <span>損切り・撤退条件</span>
+    <p>参照価格848.40に対し、週次終値が814.46を下回る場合は撤退確認。</p>
+  </section>
+  <section class="statement">
+    <span>情報要約</span>
+    <p>1655 / iS S&amp;P500米国株。公開データソース 1655.T の直近終値は848.40 JPY。楽天証券購入可能ユニバースで確認済み。</p>
+  </section>
+  <section class="statement">
+    <span>データ鮮度</span>
+    <p>live_public_web_yahoo: 2026-05-21 時点。生成日 2026-05-21。</p>
+  </section>
+  <section class="statement">
+    <span>バックテスト確認</span>
+    <ul><li>シグナル遅延: 1期</li><li>取引コスト: 含む</li><li>スリッページ: 含む</li><li>最大DD: -0.0824</li><li>OOS: 確認済み</li><li>WF: 確認済み</li></ul>
+  </section>
+  <section class="statement">
+    <span>警告</span>
+    <ul><li>公開情報のみのため、実行条件は別途確認してください</li><li>売り側の実行前にローカルGuardianで保有確認が必要です</li><li>人間確認が未完了です</li></ul>
+  </section>
+  <section class="statement">
+    <span>公開Web参照元</span>
+    <ul><li><a href="https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf" rel="noopener noreferrer" target="_blank">楽天証券 取扱確認元</a></li><li><a href="https://query1.finance.yahoo.com/v8/finance/chart/1655.T?range=1y&amp;interval=1d" rel="noopener noreferrer" target="_blank">Yahoo Finance 1655.T 日次チャート</a></li></ul>
+  </section>
+</article>
+
+
+<article class="proposal-card sell">
+  <div class="card-topline">
+    <div>
+      <h2>2559 / MAXIS全世界株式</h2>
+      <p class="idline">SWING_PUBLIC_2559_20260521</p>
+    </div>
+    <span class="action-badge sell">売り提案</span>
+  </div>
+
+  <div class="quick-grid">
+    <section><span>リスク</span><b>中リスク</b></section>
+    <section><span>商品</span><b>ETF</b></section>
+    <section><span>ゲート</span><b>2</b></section>
+    <section><span>参照価格</span><b>28,910.00 JPY</b></section>
+    <section><span>投入上限</span><b>28,910.00 JPY</b></section>
+    <section><span>最大許容損失</span><b>1,156.40 JPY</b></section>
+  </div>
+
+  <section class="statement">
+    <span>レジーム</span>
+    <p>高ボラ警戒 / 確信度 1.00</p>
+  </section>
+  <section class="statement">
+    <span>根拠シグナル</span>
+    <ul><li>リスク: profit_protection_or_overheat</li></ul>
+  </section>
+  <section class="statement">
+    <span>反証条件</span>
+    <p>終値が損切り目安を下回る、出来高を伴わない反転、またはレジームが高ボラ警戒へ移行した場合は提案を弱める。</p>
+  </section>
+  <section class="statement">
+    <span>損切り・撤退条件</span>
+    <p>参照価格28910.00に対し、週次終値が27753.60を下回る場合は撤退確認。</p>
+  </section>
+  <section class="statement">
+    <span>情報要約</span>
+    <p>2559 / MAXIS全世界株式。公開データソース 2559.T の直近終値は28910.00 JPY。楽天証券購入可能ユニバースで確認済み。</p>
+  </section>
+  <section class="statement">
+    <span>データ鮮度</span>
+    <p>live_public_web_yahoo: 2026-05-21 時点。生成日 2026-05-21。</p>
+  </section>
+  <section class="statement">
+    <span>バックテスト確認</span>
+    <ul><li>シグナル遅延: 1期</li><li>取引コスト: 含む</li><li>スリッページ: 含む</li><li>最大DD: -0.0688</li><li>OOS: 確認済み</li><li>WF: 確認済み</li></ul>
+  </section>
+  <section class="statement">
+    <span>警告</span>
+    <ul><li>公開情報のみのため、実行条件は別途確認してください</li><li>売り側の実行前にローカルGuardianで保有確認が必要です</li><li>人間確認が未完了です</li></ul>
+  </section>
+  <section class="statement">
+    <span>公開Web参照元</span>
+    <ul><li><a href="https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf" rel="noopener noreferrer" target="_blank">楽天証券 取扱確認元</a></li><li><a href="https://query1.finance.yahoo.com/v8/finance/chart/2559.T?range=1y&amp;interval=1d" rel="noopener noreferrer" target="_blank">Yahoo Finance 2559.T 日次チャート</a></li></ul>
+  </section>
+</article>
+
+
+<article class="proposal-card sell">
+  <div class="card-topline">
+    <div>
+      <h2>2631 / MAXISナスダック100</h2>
+      <p class="idline">SWING_PUBLIC_2631_20260521</p>
+    </div>
+    <span class="action-badge sell">売り提案</span>
+  </div>
+
+  <div class="quick-grid">
+    <section><span>リスク</span><b>高リスク</b></section>
+    <section><span>商品</span><b>ETF</b></section>
+    <section><span>ゲート</span><b>3</b></section>
+    <section><span>参照価格</span><b>33,150.00 JPY</b></section>
+    <section><span>投入上限</span><b>0.00 JPY</b></section>
+    <section><span>最大許容損失</span><b>0.00 JPY</b></section>
+  </div>
+
+  <section class="statement">
+    <span>レジーム</span>
+    <p>高ボラ警戒 / 確信度 1.00</p>
+  </section>
+  <section class="statement">
+    <span>根拠シグナル</span>
+    <ul><li>リスク: profit_protection_or_overheat</li></ul>
+  </section>
+  <section class="statement">
+    <span>反証条件</span>
+    <p>終値が損切り目安を下回る、出来高を伴わない反転、またはレジームが高ボラ警戒へ移行した場合は提案を弱める。</p>
+  </section>
+  <section class="statement">
+    <span>損切り・撤退条件</span>
+    <p>参照価格33150.00に対し、週次終値が31326.75を下回る場合は撤退確認。</p>
+  </section>
+  <section class="statement">
+    <span>情報要約</span>
+    <p>2631 / MAXISナスダック100。公開データソース 2631.T の直近終値は33150.00 JPY。楽天証券購入可能ユニバースで確認済み。</p>
+  </section>
+  <section class="statement">
+    <span>データ鮮度</span>
+    <p>live_public_web_yahoo: 2026-05-21 時点。生成日 2026-05-21。</p>
+  </section>
+  <section class="statement">
+    <span>バックテスト確認</span>
+    <ul><li>シグナル遅延: 1期</li><li>取引コスト: 含む</li><li>スリッページ: 含む</li><li>最大DD: -0.0993</li><li>OOS: 確認済み</li><li>WF: 確認済み</li></ul>
+  </section>
+  <section class="statement">
+    <span>警告</span>
+    <ul><li>公開情報のみのため、実行条件は別途確認してください</li><li>高ボラティリティと週明けギャップの確認が必要です</li><li>売り側の実行前にローカルGuardianで保有確認が必要です</li><li>売り側の損失上限はローカルGuardianで保有状況を確認してから確定します</li><li>人間確認が未完了です</li></ul>
+  </section>
+  <section class="statement">
+    <span>公開Web参照元</span>
+    <ul><li><a href="https://wwwsotp.rakuten-sec.co.jp/web/domestic/fractional/lineup/pdf/pdf_01.pdf" rel="noopener noreferrer" target="_blank">楽天証券 取扱確認元</a></li><li><a href="https://query1.finance.yahoo.com/v8/finance/chart/2631.T?range=1y&amp;interval=1d" rel="noopener noreferrer" target="_blank">Yahoo Finance 2631.T 日次チャート</a></li></ul>
+  </section>
+</article>
+
+  </section>
+</main>
+<footer>
+  Guardian Swing Lab public mobile view. Static HTML only.
+</footer>
+</body>
+</html>
